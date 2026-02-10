@@ -1,13 +1,17 @@
 # Fixing Vercel 404 NOT_FOUND
 
-## 1. The fix (do this first)
+## 1. The fix (do this in Vercel dashboard)
 
-In the **Vercel dashboard**:
+Go to your project → **Settings** → **General**. Set **all** of these:
 
-1. Open your project → **Settings** → **General**.
-2. Find **Root Directory**.
-3. Set it to: **`luxury-perfume`**
-4. Save and **redeploy** the project.
+| Setting | Value | Why |
+|--------|--------|-----|
+| **Root Directory** | `luxury-perfume` | Must be **all lowercase**. Your site files live in this folder. |
+| **Framework Preset** | **Other** | So Vercel treats it as a static site, not Next/Vite etc. |
+| **Build Command** | *(leave empty)* | No build step; we're serving static HTML. |
+| **Output Directory** | *(leave empty)* | **Critical.** If this is `dist` or `build`, Vercel serves an empty folder → 404. Leave blank so it serves the root. |
+
+Then go to **Deployments** → open the **⋯** on the latest → **Redeploy** (don’t use cache).
 
 After redeploy, the site should load at your deployment URL instead of 404.
 
@@ -50,4 +54,13 @@ So: the 404 is from a **mismatch between repo layout and Vercel’s “root dire
 
 ---
 
-**Summary:** Set **Root Directory** in Vercel to **`luxury-perfume`**, redeploy, and the 404 NOT_FOUND on the main URL should be resolved.
+**Summary:** Set **Root Directory** in Vercel to **`luxury-perfume`**, leave **Output Directory** and **Build Command** empty, set **Framework Preset** to **Other**, then redeploy (without cache).
+
+---
+
+## 6. Still 404? Double-check
+
+- **Output Directory** is the #1 cause after Root Directory. If it’s set to `dist`, `build`, or `.vercel/output`, clear it so the field is empty.
+- Use **Redeploy** → **Redeploy without using cache** so old build config isn’t reused.
+- Open the **production** URL (e.g. `https://your-project.vercel.app`), not an old or preview link.
+- In **Deployments**, confirm the latest deployment status is **Ready** (not Failed or Canceled).

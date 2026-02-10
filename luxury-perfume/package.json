@@ -2,7 +2,8 @@
   "name": "luxury-perfume",
   "private": true,
   "scripts": {
-    "dev": "npx serve -l 3000"
+    "dev": "npx serve -l 3000",
+    "build": "echo 'Static site - no build step'"
   },
   "devDependencies": {
     "serve": "^14.2.0"
