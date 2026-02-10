@@ -15,6 +15,23 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  var navToggle = document.querySelector('.nav-toggle');
+  var navLinks = document.querySelector('.nav-links');
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', open);
+      navLinks.setAttribute('aria-hidden', !open);
+    });
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        nav.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navLinks.setAttribute('aria-hidden', 'true');
+      });
+    });
+  }
+
   // Perfume filters on perfumes page
   var filterBar = document.querySelector('[data-perfume-filter]');
   if (filterBar) {
